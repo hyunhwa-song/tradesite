@@ -1,34 +1,27 @@
-package com.example.tradesite.chatlist
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.tradesite.chatlist.ChatListItem
 import com.example.tradesite.databinding.ItemChatListBinding
 
-class ChatListAdapter(val onItemClicked: (ChatListItem) -> Unit) :
-    ListAdapter<ChatListItem, ChatListAdapter.ViewHolder>(diffUtil) {
+class ChatListAdapter(val onItemClicked: (ChatListItem) -> Unit) : ListAdapter<ChatListItem, ChatListAdapter.ViewHolder>(diffUtil) {
 
-    inner class ViewHolder(private val binding: ItemChatListBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: ItemChatListBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(chatListItem: ChatListItem) {
             binding.root.setOnClickListener {
                 onItemClicked(chatListItem)
             }
+
             binding.chatRoomTitleTextView.text = chatListItem.itemTitle
+
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            ItemChatListBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
+        return ViewHolder(ItemChatListBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -44,6 +37,9 @@ class ChatListAdapter(val onItemClicked: (ChatListItem) -> Unit) :
             override fun areContentsTheSame(oldItem: ChatListItem, newItem: ChatListItem): Boolean {
                 return oldItem == newItem
             }
+
+
         }
     }
+
 }

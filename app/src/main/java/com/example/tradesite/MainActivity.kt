@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.tradesite.home.HomeFragment
-import com.example.tradesite.chatlist.ChatListFragment
+
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
 
         val homeFragment = HomeFragment()
-        val chatListFragment = ChatListFragment()
+
         val myPageFragment = MyPageFragment()
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> replaceFragment(homeFragment)
-                R.id.chatList -> replaceFragment(chatListFragment)
+
                 R.id.myPage -> replaceFragment(myPageFragment)
             }
             true

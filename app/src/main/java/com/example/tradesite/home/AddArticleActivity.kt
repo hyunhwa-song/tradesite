@@ -1,38 +1,37 @@
-package com.example.tradesite.home
+
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.example.tradesite.DBKey.Companion.DB_ARTICLES
 import com.example.tradesite.R
-import com.google.firebase.Firebase
+import com.example.tradesite.home.ArticleModel
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.database
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.storage
+import com.google.firebase.storage.ktx.storage
 
 class AddArticleActivity : AppCompatActivity() {
 
-
-    private val auth: FirebaseAuth by lazy { Firebase.auth }
-
-    private val storage: FirebaseStorage by lazy { Firebase.storage }
     private var selectedUri: Uri? = null
+    private val auth: FirebaseAuth by lazy {
+        Firebase.auth
+    }
 
-    
+    private val storage: FirebaseStorage by lazy {
+        Firebase.storage
+    }
+
     private val articleDB: DatabaseReference by lazy {
         Firebase.database.reference.child(DB_ARTICLES)
     }

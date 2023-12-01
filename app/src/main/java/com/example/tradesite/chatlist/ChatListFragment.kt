@@ -1,6 +1,3 @@
-package com.example.tradesite.chatlist
-
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -9,37 +6,36 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tradesite.DBKey.Companion.CHILD_CHAT
 import com.example.tradesite.DBKey.Companion.DB_USERS
 import com.example.tradesite.R
-import com.example.tradesite.chatdetail.ChatRoomActivity
-import com.example.tradesite.databinding.FragmentChatListBinding
+import com.example.tradesite.chatlist.ChatListItem
+import com.example.tradesite.databinding.FragmentChatlistBinding
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
+import com.google.firebase.auth.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.database.database
+import fastcampus.aop.part3.chapter06.chatdetail.ChatRoomActivity
 
-class ChatListFragment : Fragment(R.layout.fragment_chat_list) {
+class ChatListFragment : Fragment(R.layout.fragment_chatlist) {
 
-    companion object {
-        fun newInstance() = ChatListFragment()
-        const val TAG = "ChatListFragment"
-    }
-
-    private var binding: FragmentChatListBinding? = null
+    private var binding: FragmentChatlistBinding? = null
     private lateinit var chatListAdapter: ChatListAdapter
     private val chatRoomList = mutableListOf<ChatListItem>()
 
-    private val auth: FirebaseAuth by lazy { Firebase.auth }
+    private val auth: FirebaseAuth by lazy {
+        Firebase.auth
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val fragmentChatListBinding = FragmentChatListBinding.bind(view)
-        binding = fragmentChatListBinding
+        val fragmentChatlistBinding = FragmentChatlistBinding.bind(view)
+        binding = fragmentChatlistBinding
+
 
         chatListAdapter = ChatListAdapter(onItemClicked = { chatRoom ->
-            // 채팅방으로 이동
+            // 채팅방으로 이동 하는 코드
             context?.let {
                 val intent = Intent(it, ChatRoomActivity::class.java)
                 intent.putExtra("chatKey", chatRoom.key)
@@ -49,18 +45,17 @@ class ChatListFragment : Fragment(R.layout.fragment_chat_list) {
 
         chatRoomList.clear()
 
-        fragmentChatListBinding.chatListRecyclerView.adapter = chatListAdapter
-        fragmentChatListBinding.chatListRecyclerView.layoutManager = LinearLayoutManager(context)
+        fragmentChatlistBinding.chatListRecyclerView.adapter = chatListAdapter
+        fragmentChatlistBinding.chatListRecyclerView.layoutManager = LinearLayoutManager(context)
+
 
         if (auth.currentUser == null) {
             return
         }
 
-        val chatDB = Firebase.database.reference.child(DB_USERS).child(auth.currentUser!!.uid)
-            .child(CHILD_CHAT)
+        val chatDB = Firebase.database.reference.child(DB_USERS).child(auth.currentUser!!.uid).child(CHILD_CHAT)
 
         chatDB.addListenerForSingleValueEvent(object : ValueEventListener {
-            @SuppressLint("NotifyDataSetChanged")
             override fun onDataChange(snapshot: DataSnapshot) {
                 snapshot.children.forEach {
                     val model = it.getValue(ChatListItem::class.java)
@@ -68,17 +63,25 @@ class ChatListFragment : Fragment(R.layout.fragment_chat_list) {
 
                     chatRoomList.add(model)
                 }
+
                 chatListAdapter.submitList(chatRoomList)
                 chatListAdapter.notifyDataSetChanged()
             }
 
-            override fun onCancelled(error: DatabaseError) {}
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+
         })
+
+
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+
     override fun onResume() {
         super.onResume()
+
         chatListAdapter.notifyDataSetChanged()
     }
 }

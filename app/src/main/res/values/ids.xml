@@ -4,4 +4,7 @@
     <item name="chatList" type="id" />
     <item name="myPage" type="id" />
     <item name="bottomNavigationView" type="id" />
+    <item name="chatRecyclerView" type="id" />
+    <item name="sendButton" type="id" />
+    <item name="messageEditText" type="id" />
 </resources>
