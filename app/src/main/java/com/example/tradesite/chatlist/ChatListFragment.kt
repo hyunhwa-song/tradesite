@@ -15,7 +15,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
-import fastcampus.aop.part3.chapter06.chatdetail.ChatRoomActivity
+
 
 class ChatListFragment : Fragment(R.layout.fragment_chatlist) {
 
