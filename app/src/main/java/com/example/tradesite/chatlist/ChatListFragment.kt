@@ -1,3 +1,4 @@
+package com.example.tradesite.chatlist
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -6,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tradesite.DBKey.Companion.CHILD_CHAT
 import com.example.tradesite.DBKey.Companion.DB_USERS
 import com.example.tradesite.R
-import com.example.tradesite.chatlist.ChatListItem
+
 import com.example.tradesite.databinding.FragmentChatlistBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth

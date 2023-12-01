@@ -1,3 +1,4 @@
+package com.example.tradesite.chatlist
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
